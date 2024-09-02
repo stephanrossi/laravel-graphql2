@@ -1,16 +1,32 @@
-type User{
-    id:ID!
-    name:String!
-    email:String!
-    password:String!
-    remember_token:String
-    cpf:String
-    address:String
-    phone:String
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  remember_token: String
+  cpf: String
+  address: String
+  phone: String
 }
 
-type Query{
-    me: User @auth
-    user(id:ID!):User @find
-    users: [User!]! @guard @all
+type Query {
+  me: User @auth
+  user(id: ID! @whereKey): User @find
+  users: [User!]! @guard @all
+}
+
+type Mutation {
+  createUser(
+    name: String!
+    email: String!
+    password: String!
+    remember_token: String!
+    cpf: String
+    address: String
+    phone: String
+  ): User! @field(resolver: "App\\GraphQL\\Mutations\\CreateUserResolver")
+  updateUser(id: ID!, name: String, email: String, password: String): User!
+    @guard
+    @update
+  deleteUser(id: ID!): Boolean! @guard @delete
 }
