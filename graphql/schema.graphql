@@ -1,0 +1,16 @@
+type User{
+    id:ID!
+    name:String!
+    email:String!
+    password:String!
+    remember_token:String
+    cpf:String
+    address:String
+    phone:String
+}
+
+type Query{
+    me: User @auth
+    user(id:ID!):User @find
+    users: [User!]! @guard @all
+}
